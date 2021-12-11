@@ -96,6 +96,18 @@ def delete_note(id):
     except Exception as e:
         print(e)
 
+def print_note(i):
+    print(
+        f'''
+        O{len(i['body'])*'-'}O
+        \033[1m {i['title']}  \033[0m  {i['date']}  id: {i['id']}
+            
+
+            {i['body']}
+        O{len(i['body'])*'-'}O
+                     '''
+    )
+
 
 if __name__ == '__main__':
     
@@ -126,7 +138,7 @@ Opcions:
     -new: create a new note.
     -sa: show all the notes.
     -search: search an specific note.
-    -del: delete a note from ther id.
+    -del: delete a note by ther id.
     '''
     )
 
@@ -142,16 +154,8 @@ Opcions:
             system('clear')
             print(title_app)
             for i in get_notes(user):
-                print(
-                    f'''
-        O{len(i['body'])*'-'}O
-        \033[1m {i['title']}  \033[0m  {i['date']}  id: {i['id']}
-            
+                print_note(i)
 
-            {i['body']}
-        O{len(i['body'])*'-'}O
-                     '''
-                )
         elif choose == 'search':
 
             system('clear')
@@ -161,16 +165,8 @@ Opcions:
             for i in get_notes(user):
                 if word in i['title']:
                     find = True
-                    print(
-                        f'''
-        O{len(i['body'])*'-'}O
-        \033[1m {i['title']}  \033[0m {i['date']}   id: {i['id']}
-            
-        
-            {i['body']}
-        O{len(i['body'])*'-'}O
-                        '''
-                    )
+                    print_note(i)
+                    
             if not find:
                 system('clear')
                 print(title_app)
