@@ -1,12 +1,11 @@
-
 from os import system
-from getpass import getpass
-
 from sqlalchemy.orm import session
 
+# my modules
 from models import Session
 from models.user import User
 from models.note import Note
+from utils.firstStep import register, login
 
 session = Session()
 
@@ -28,59 +27,9 @@ title_app ='''
                     '  ' '  ' '  ' '  ' '  ' '  ' '  ' '  ' '  ' '  ' '  ' ' '           
         '''
 
-def login():
-    email = input('Email: ')
-    with Session() as session:
 
-        user = session.query(User).filter(User.email == email).first()
-        if user is not None:
-        
-            password = getpass('Password: ')
-            if password == user.password:
-        
-                 return user
-        
-            else:
-        
-                return False
-        
-        else:
-        
-            return False
  
-def secure_pass(password):
-    if len(password) >= 8:
-        return True
-    else:
-        return False
 
-
-def register():
-    system('clear')
-    print(title_app)
-    print('Welcome to Huan Notes, the ultimate anotations app. Lets create an acount.')
-    name = input('Name: ')
-    email = input('Email: ')
-    fine = False
-    while not fine:
-        pass1 = getpass()
-        if not secure_pass(pass1):
-            system('clear')
-            print(title_app)
-            print('Password not safe.')
-            continue
-        pass2 = getpass()
-        if pass1 != pass2:
-            system('clear')
-            print(title_app)
-            print('Passwords not equal.')
-            continue
-        fine = True
-    with Session() as session:
-        user = User(name=name, email=email, password=pass1)
-        session.add(user)
-        session.commit()
-        print('Account created.')
  
 
 def get_notes(user):
