@@ -11,7 +11,9 @@ class Note(Base):
     title = sa.Column(sa.String(64), nullable=False)
     body = sa.Column(sa.String(350), nullable=False)
     date = sa.Column(sa.Date(), default=date.today())
+    #category = sa.Column(sa.String(64), nullable=False)
 
     def __str__(self):
         return self.name
 
+Base.metadata.create_all(engine)

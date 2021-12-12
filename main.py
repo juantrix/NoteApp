@@ -1,9 +1,8 @@
 
 from os import system
+from getpass import getpass
 
 from sqlalchemy.orm import session
-from sqlalchemy.sql.expression import null
-from sqlalchemy.sql.operators import notendswith_op
 
 from models import Session
 from models.user import User
@@ -12,11 +11,21 @@ from models.note import Note
 session = Session()
 
 title_app ='''
+
         HH  HH  UU  UU     AA     NN   NN      NN   NN   OOOOO  TTTTTTTT EEEEEE   SSSSS
         HH  HH  UU  UU    AAAA    NNNN NN      NNNN NN  OO   OO    TT    EE      SS    S
         HHHHHH  UU  UU   AA  AA   NN NNNN      NN NNNN  OO   OO    TT    EEEE      SS
         HH  HH  UU  UU  AAAAAAAA  NN  NNN      NN  NNN  OO   OO    TT    EE     S    SS
         HH  HH   UUUU  AA      AA NN   NN      NN   NN   OOOOO     TT    EEEEEE  SSSSS   @juan_ostrit
+        __________________________________________________________________________________
+        \________________________________________________________________________________/
+                \________________________________________________________________/ 
+                    |   _    _    _    _    _    _    _    _    _    _    _  |
+                    |  / \  / \  / \  / \  / \  / \  / \  / \  / \  / \  / \ |
+                    |  | |  | |  | |  | |  | |  | |  | |  | |  | |  | |  | | |
+                    |  | |  | |  | |  | |  | |  | |  | |  | |  | |  | |  | | |
+                    !  ! !  ! !  ! !  ! !  ! !  ! !  ! !  ! !  ! !  ! !  ! ! !
+                    '  ' '  ' '  ' '  ' '  ' '  ' '  ' '  ' '  ' '  ' '  ' ' '           
         '''
 
 def login():
@@ -26,7 +35,7 @@ def login():
         user = session.query(User).filter(User.email == email).first()
         if user is not None:
         
-            password = input('Pass: ')
+            password = getpass('Password: ')
             if password == user.password:
         
                  return user
@@ -54,13 +63,13 @@ def register():
     email = input('Email: ')
     fine = False
     while not fine:
-        pass1 = input('Password (min 8 length): ')
+        pass1 = getpass()
         if not secure_pass(pass1):
             system('clear')
             print(title_app)
             print('Password not safe.')
             continue
-        pass2 = input('Password again: ')
+        pass2 = getpass()
         if pass1 != pass2:
             system('clear')
             print(title_app)
@@ -166,7 +175,7 @@ Opcions:
                 if word in i['title']:
                     find = True
                     print_note(i)
-                    
+
             if not find:
                 system('clear')
                 print(title_app)
