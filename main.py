@@ -1,13 +1,9 @@
 from os import system
-from sqlalchemy.orm import session
 
 # my modules
-from models import Session
-from models.user import User
-from models.note import Note
+from utils.noteUtils import get_notes, post_note, delete_note, print_note
 from utils.firstStep import register, login
 
-session = Session()
 
 title_app ='''
 
@@ -26,45 +22,6 @@ title_app ='''
                     !  ! !  ! !  ! !  ! !  ! !  ! !  ! !  ! !  ! !  ! !  ! ! !
                     '  ' '  ' '  ' '  ' '  ' '  ' '  ' '  ' '  ' '  ' '  ' ' '           
         '''
-
-
- 
-
- 
-
-def get_notes(user):
-    with Session() as session:
-        notes = session.query(Note).filter(Note.user == user.id).all()
-        notes = [{'title':i.title, 'body':i.body, 'id':i.id, 'date':i.date} for i in notes]
-        return notes 
-
-def post_note(user):
-    title = input('Title: ')
-    body = input('Body: ')
-    with Session() as session:
-        session.add(Note(title=title, body=body, user=user.id))
-        session.commit()
-
-def delete_note(id):
-    try:
-        note = session.query(Note).filter(Note.id==id)
-        note.delete()
-        session.commit()
-        print('Deleted')
-    except Exception as e:
-        print(e)
-
-def print_note(i):
-    print(
-        f'''
-        O{len(i['body'])*'-'}O
-        \033[1m {i['title']}  \033[0m  {i['date']}  id: {i['id']}
-            
-
-            {i['body']}
-        O{len(i['body'])*'-'}O
-                     '''
-    )
 
 
 if __name__ == '__main__':
@@ -92,11 +49,11 @@ r: for register.
     choose = input(
     '''
 Opcions:
-    -exit: close the app.
-    -new: create a new note.
-    -sa: show all the notes.
+    -exit:   close the app.
+    -new:    create a new note.
+    -sa:     show all the notes.
     -search: search an specific note.
-    -del: delete a note by ther id.
+    -del:    delete a note by ther id.
     '''
     )
 
@@ -143,10 +100,10 @@ Opcions:
         choose = input(
         '''
 Opcions:
-    -exit: close the app.
-    -new: create a new note.
-    -sa: show all the notes.
+    -exit:   close the app.
+    -new:    create a new note.
+    -sa:     show all the notes.
     -search: search an specific note.
-    -del: delete a note from ther id.
+    -del:    delete a note from ther id.
     '''
     ) 
