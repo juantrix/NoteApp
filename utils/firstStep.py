@@ -2,7 +2,10 @@ from os import system
 from models import Session
 from models.user import User
 from models.note import Note
+from utils.emailVerify import send_email_verify
 from getpass import getpass
+
+from utils.emailVerify import send_email
 
 title_app ='''
 
@@ -70,8 +73,22 @@ def register():
             print('Passwords not equal.')
             continue
         fine = True
-    with Session() as session:
-        user = User(name=name, email=email, password=pass1)
-        session.add(user)
-        session.commit()
-        print('Account created.')
+
+    code_match = False
+    code = send_email_verify(email)
+    while not code_match:
+        system('clear')
+        print(title_app)
+
+        if code == int(input('We send you an email with the code, enter here the code to continue (or enter exit to cancel):')):
+            code_match = True
+            with Session() as session:
+                user = User(name=name, email=email, password=pass1)
+                session.add(user)
+                session.commit()
+                print('Account created.')
+                input('Press enter to continue...')
+
+        elif code == 'exit':
+            code_match = True
+
