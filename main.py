@@ -91,7 +91,7 @@ Opcions:
             system('clear')
             print(title_app)
             id = input('Enter the id of the note you want to delte: ')
-            delete_note(id)
+            delete_note(int(id))
 
 
         input('Press enter for go to menu..')

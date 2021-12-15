@@ -1,4 +1,3 @@
-from sqlalchemy.engine import create_engine
 from . import Base, engine
 import sqlalchemy as sa
 
@@ -13,6 +12,7 @@ class User(Base):
 
     def __str__(self):
         return self.name
+
 
 
 
